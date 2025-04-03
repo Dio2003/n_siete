@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-.DS_Store
-node_modules
-/dist
-
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-=======
 # Dependencias de Node.js
 .DS_Store
 node_modules
@@ -19,22 +7,10 @@ package-lock.json
 # Variables de entorno .env
 
 # Logs y archivos de depuración
->>>>>>> 3a6842e (Se han comiteado los archivos)
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-<<<<<<< HEAD
-
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-=======
 logs/
 *.log
 
@@ -50,4 +26,3 @@ Thumbs.db
 
 # Archivos de cobertura (si usas pruebas con cobertura)
 coverage/
->>>>>>> 3a6842e (Se han comiteado los archivos)
