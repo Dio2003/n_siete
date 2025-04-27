@@ -9,8 +9,10 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usersR = '/api/usuarios';
+        this.empresasR = '/api/empresas';
         this.autentificacionR = '/api/auth';
         this.rolesR = '/api/roles';
+        this.periodosR = '/api/periodos';
         this.dbConnection();
         this.middleware();
 
@@ -37,8 +39,10 @@ class Server {
        
     routes() {
         this.app.use(this.usersR, require('./../routes/users'));
+        this.app.use(this.empresasR, require('./../routes/empresas'));
         this.app.use(this.autentificacionR, require('./../routes/auth'));
         this.app.use(this.rolesR, require('./../routes/roles'));
+        this.app.use(this.periodosR, require('./../routes/periodos'));
     }
 
     

@@ -30,7 +30,7 @@ router.put('/:id',[
     check('correo', 'El correo no es valido').isEmail(),
     //TODO: EL CORREO DEBE VERIFICARSE PARA USUARIOS QUE NO CUENTEN CON ESTE ID (en el controlador ya esta)
     //check('contra', 'Minimo 8 caracteres para la contraseña').isLength({min:8}),//TODO: La contraseña se va a actualizar por separado
-    check('idrol').custom(existeRol),
+    check('id_rol').custom(existeRol),
     validar,
     // validarJWT,
     // esAdminRol

@@ -43,7 +43,7 @@ const getIdController = async (req, res) => {
             include:[
                 {
                     model:Rol,
-                    attributes:['rol']
+                    attributes:['nombre_rol']
                 }
             ]
         });
@@ -93,7 +93,7 @@ const getContoller = async (req, res) => {
                 Usuario.count(),
                 // Usuario.findAll()
                 Usuario.findAll({
-                    attributes:['id_usuario', 'nombre', 'correo', 'id_rol', 'estado', 'createdAt', 'updatedAt'],
+                    attributes:['id_usuario', 'nombre', 'cedula' ,'correo', 'id_rol', 'estado', 'telefono', 'createdAt', 'updatedAt'],
                     include:[//para obtener el nombre del rol
                         {
                             model:Rol,
@@ -141,7 +141,7 @@ const putController = async (req, res) => {
         const correoBD = await Usuario.findOne({
             where: {
                 correo: body.correo,
-                id: {
+                id_usuario: {
                     [Op.ne]: id //que no sea del mismo id de usuario
                 }
             }

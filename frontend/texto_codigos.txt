@@ -1,0 +1,86 @@
+1. ------------------------codigo para arregalar errores del Enlsit-------------------------|
+
+npm run lint -- --fix
+
+2. ----------------------------instalar axios para las peticiones al servidor---------------|
+
+npm install axios --legacy-peer-depsli
+
+
+
+
+3. -------------------------------- comandos para el Git -----------------------------------|
+
+COMANDOS
+
+git clone : es para clonar el repositorio con los archivos
+git checkout -b "Acá va el nombre de la rama" : es para crear una rama alternativa en la que cada uno va a trabajar
+git add . : para comitear todos los archivos a la vez
+git commit -m "Acá se pone el mensaje de las actualizaciones"
+git push origin "Acá se ecribe un mensaje" : es para actualizar los cambios en el GitHub
+
+
+PARA QUITAR POR COMPLETO EL GIT: rm -rf .git
+
+4. ------------------------------ CODIGO PARA LOS ICONOS------------------------------------|
+
+npm install @iconify/vue
+
+PAGINA PARA BUSCAR LOS ICONOS: https://icon-sets.iconify.design/mdi/?icon-filter=build
+
+5. ------------------------------INTEGRAR DATATABLES EN VUE---------------------------------|
+
+_____-------EJECUTAR ESTOS COMANDOS-----_________
+
+npm install datatables.net-vue3 jszip pdfmake datatables.net-bs5 datatables.net-autofill-bs5 datatables.net-buttons-bs5 datatables.net-datetime datatables.net-responsive-bs5 datatables.net-select-bs5 --legacy-peer-deps
+npm i --save-dev @types/jquery
+
+
+__________EN EL SRCRIPT____________
+import jszip from 'jszip'
+import pdfmake from 'pdfmake'
+import DataTable from 'datatables.net-vue3'
+import DataTablesCore from 'datatables.net-bs5'
+import 'datatables.net-autofill-bs5'
+import 'datatables.net-buttons-bs5'
+import 'datatables.net-buttons/js/buttons.html5.mjs'
+import 'datatables.net-buttons/js/buttons.print.mjs'
+import DateTime from 'datatables.net-datetime'
+import 'datatables.net-responsive-bs5'
+import 'datatables.net-select-bs5'
+ 
+DataTablesCore.Buttons.jszip(jszip)
+DataTablesCore.Buttons.pdfMake(pdfmake)
+DataTable.use(DataTablesCore)
+__________EN EL STYLE______________
+@import url('datatables.net-bs5');
+@import url('datatables.net-autofill-bs5');
+@import url('datatables.net-buttons-bs5');
+@import url('datatables.net-responsive-bs5');
+@import url('datatables.net-select-bs5');
+
+6. ------------------solucionar el autocrlf----------------------------------|
+
+listar
+git config --global --list
+
+ejecutar
+git config --global --unset core.autocrlf
+git config --global --unset-all core.autocrlf
+
+volver a consultar
+git config --global --list
+
+
+7. -------------------LIBRERIA DE ALERTAS -----------------------------
+
+npm install sweetalert2 --legacy-peer-deps
+
+8. -------------------INSTALAR JSON PARA PRUEBAS -----------------------------
+
+npm install -g json-server
+
+json-server --version
+
+json-server --watch db.json --port 5000
+

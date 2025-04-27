@@ -1,0 +1,139 @@
+{
+  "periodos": [
+    {
+      "id": "1",
+      "nombre": "2025"
+    },
+    {
+      "id": "2",
+      "nombre": "2024"
+    }
+  ],
+  "empresas": [
+    {
+      "id_empresa": 1,
+      "empresa": "Universidad Nacional",
+      "sigla": "UN",
+      "id_periodo": 1,
+      "id": "50df",
+      "estado": true
+    },
+    {
+      "id": "9f31",
+      "empresa": "Empresa B",
+      "sigla": "ww",
+      "id_periodo": "1",
+      "estado": true
+    },
+    {
+      "id": "1136",
+      "empresa": "Empresa B",
+      "sigla": "wwrrr",
+      "id_periodo": "2",
+      "estado": true
+    },
+    {
+      "id": "ead9",
+      "empresa": "Empresa B",
+      "sigla": "wweee",
+      "id_periodo": "1",
+      "estado": true
+    },
+    {
+      "id": "0e28",
+      "empresa": "Empresa B",
+      "sigla": "ww444",
+      "id_periodo": "1",
+      "estado": true
+    },
+    {
+      "id": "0b63",
+      "empresa": "nueva empesa",
+      "sigla": "S.A.",
+      "id_periodo": 1,
+      "estado": true
+    },
+    {
+      "id": "b1d5",
+      "empresa": "nueva empesa2",
+      "sigla": "S.A.",
+      "id_periodo": 1,
+      "estado": true
+    },
+    {
+      "id": "0524",
+      "empresa": "nueva empesa2eee",
+      "sigla": "S.A.",
+      "id_periodo": 1,
+      "estado": true
+    },
+    {
+      "id": "d91c",
+      "empresa": "nueva empesa2eeed",
+      "sigla": "S.A.",
+      "id_periodo": 1,
+      "estado": true
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "cedula": "12345678",
+      "nombre": "María González",
+      "telefono": "0414-1234567",
+      "correo": "maria.gonzalez@example.com",
+      "rol": "Administrador",
+      "estado": "Activo"
+    },
+    {
+      "id": "2",
+      "cedula": "87654321",
+      "nombre": "Juan Pérez",
+      "telefono": "0426-7654321",
+      "correo": "juan.perez@example.com",
+      "rol": "Usuario",
+      "estado": "Inactivo"
+    },
+    {
+      "id": "3",
+      "cedula": "11223344",
+      "nombre": "Luisa Martínez",
+      "telefono": "0412-3344556",
+      "correo": "luisa.martinez@example.com",
+      "rol": "Supervisor",
+      "estado": "Activo"
+    },
+    {
+      "id": "5",
+      "cedula": "44556677",
+      "nombre": "Ana Torres",
+      "telefono": "0424-5566778",
+      "correo": "ana.torres@example.com",
+      "rol": "Administrador",
+      "estado": "Activo"
+    },
+    {
+      "cedula": "2422883",
+      "nombre": "Paola",
+      "telefono": "0985145789",
+      "correo": "paola@gmail.com",
+      "rol": 1,
+      "estado": "",
+      "id": "0"
+    }
+  ],
+  "rol": [
+    {
+      "id": "1",
+      "nombre": "Administrador"
+    },
+    {
+      "id": "2",
+      "nombre": "Profesor"
+    },
+    {
+      "id": "3",
+      "nombre": "Estudiante"
+    }
+  ]
+}
