@@ -32,10 +32,23 @@ const routes: Array<RouteRecordRaw> = [
     name: 'changePass',
     component: () => import(/* webpackChunkName: "about" */ '../components/ChangePassword.vue')
   },
+  // seguridad
   {
     path: '/security',
     name: 'security',
     component: () => import(/* webpackChunkName: "about" */ '../components/AccessValidation.vue')
+  },
+  // proveedores
+  {
+    path: '/proveedor',
+    name: 'proveedor',
+    component: () => import(/* webpackChunkName: "about" */ '../views/GestProveedor.vue')
+  },
+  // clientes
+  {
+    path: '/client',
+    name: 'client',
+    component: () => import(/* webpackChunkName: "about" */ '../views/GestClient.vue')
   }
 ]
 

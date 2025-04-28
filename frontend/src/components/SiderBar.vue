@@ -6,6 +6,12 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item border-bottom">
+                            <router-link class="nav-link userprofile" aria-current="page" to="/menu">
+                                <Icon icon="mdi:user" class="me-2" width="24" height="24"  />
+                                <span>Perfil</span>
+                            </router-link>
+                        </li>
+                        <li class="nav-item border-bottom">
                             <router-link class="nav-link active" aria-current="page" to="/menu">
                                 <Icon icon="mdi:home" class="me-2" width="24" height="24"  />
                                 <span>Menu</span>
@@ -15,7 +21,7 @@
                         <li class="nav-item border-bottom">
                             <!-- el router es muy importante porque ue Router maneja las rutas sin recargar la página. -->
                             <router-link class="nav-link" to="/User">
-                                <Icon icon="mdi:account" class="me-2" width="24" height="24"  />
+                                <Icon icon="mdi:users" class="me-2" width="24" height="24"  />
                                 <span>Usuario</span>
                             </router-link>
                         </li>
@@ -25,6 +31,22 @@
                             <router-link class="nav-link" to="/Company">
                                 <Icon icon="mdi:office-building" class="me-2" width="24" height="24" />
                                 <span>Empresas</span>
+                            </router-link>
+                        </li>
+                        <!-- Proveedores -->
+                        <li class="nav-item border-bottom">
+                            <!-- el router es muy importante porque ue Router maneja las rutas sin recargar la página. -->
+                            <router-link class="nav-link" to="/proveedor">
+                                <Icon icon="mdi:office-building" class="me-2" width="24" height="24" />
+                                <span>Proveedores</span>
+                            </router-link>
+                        </li>
+                        <!-- Clientes -->
+                        <li class="nav-item border-bottom">
+                            <!-- el router es muy importante porque ue Router maneja las rutas sin recargar la página. -->
+                            <router-link class="nav-link" to="/client">
+                                <Icon icon="mdi:office-building" class="me-2" width="24" height="24" />
+                                <span>Clientes</span>
                             </router-link>
                         </li>
                     </ul>
@@ -37,6 +59,8 @@
 <script lang="ts" setup>
 // Codigo para los iconos
 import { Icon } from '@iconify/vue'
+
+// ------------------------TREAR USUARIO QUE SE REGISTRA----------------------------
 
 </script>
 
@@ -110,6 +134,10 @@ import { Icon } from '@iconify/vue'
     background-color: #585896; /* Fondo para el enlace activo */
     color: #ffffff;
 }
+.sidebar .nav-link.userprofile {
+    background-color: #d89139; /* Fondo para el perfil de usuario*/
+    color: #ffffff;
+}
 
 .sidebar .nav-link span {
     margin-left: 10px; /* Espaciado entre el icono y el texto */
@@ -126,5 +154,13 @@ import { Icon } from '@iconify/vue'
     color: #ffffff;
     margin-bottom: 15px;
     padding-left: 20px;
+}
+
+.usernav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  padding: 10px;
 }
 </style>

@@ -87,7 +87,7 @@
                v-for="item in items" :key="item.id_empresa : se itera en un array que dice: “Por cada item dentro del array items, repite este bloque HTML, y usa item.id_empresa como clave
                única para que Vue sepa cuál es cuál.” -->
               <tr v-for="item in items" :key="item.id_empresa">
-                <td class="number">{{ item.id /* eslint-disable-line camelcase */ }}</td>
+                <td class="number">{{ item.id_empresa /* eslint-disable-line camelcase */ }}</td>
                 <td>{{ item.empresa }}</td>
                 <td>{{ item.sigla }}</td>
                 <td class="number">{{ item.nombre_periodo /* eslint-disable-line camelcase */ }}</td>
