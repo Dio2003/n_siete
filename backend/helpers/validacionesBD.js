@@ -1,6 +1,7 @@
 const Rol = require("../models/rol");
 const Usuario = require("../models/usuario");
 const Empresa = require("../models/empresa");
+const Sala = require("../models/ModelSala");
 const { Op } = require('sequelize');
 
     
@@ -46,10 +47,20 @@ const existeEmpresaId = async (id="")=>{
     }
 }
 
+// PASO 5, PARA VALIDAR QUE EXISTA LA ID DE LA SALA 03/06/2025
+const existeSalaId = async (id="")=>{
+    const sala = await Sala.findByPk(id);
+
+    if(!sala){//error personalizado que va a ser capturado en el custom
+        throw new Error(`No existe sala con id: ${id}`);
+    }
+}
+
 module.exports = {
     existeRol,
     existePeriodo,
     existeCorreo,
     existeUsuarioId,
-    existeEmpresaId
+    existeEmpresaId,
+    existeSalaId // paso 5
 }

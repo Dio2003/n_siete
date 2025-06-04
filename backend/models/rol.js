@@ -7,7 +7,7 @@ const Rol = db.define('Rol', {
 },{
     createdAt: false,
     updatedAt: false,
-    tableName: 'roles'    
+    tableName: 'rol'    
 });
 
 module.exports = Rol;

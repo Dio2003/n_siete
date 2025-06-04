@@ -13,6 +13,8 @@ class Server {
         this.autentificacionR = '/api/auth';
         this.rolesR = '/api/roles';
         this.periodosR = '/api/periodos';
+        this.salasR = '/api/crearsalas'; // de salas paso 4 03/06/2025
+        this.ingresarsalasR = '/api/ingresarsalas'; // de detallesalas paso 4 03/06/2025
         this.dbConnection();
         this.middleware();
 
@@ -43,6 +45,8 @@ class Server {
         this.app.use(this.autentificacionR, require('./../routes/auth'));
         this.app.use(this.rolesR, require('./../routes/roles'));
         this.app.use(this.periodosR, require('./../routes/periodos'));
+        this.app.use(this.salasR, require('./../routes/RoutesSala')); // de salas paso 4 03/06/2025
+        this.app.use(this.ingresarsalasR, require('./../routes/RoutesIngresarSala')); // de detallesalas paso 4 03/06/2025
     }
 
     

@@ -13,7 +13,7 @@ const Usuario = db.define('Usuario', {
     telefono:{ type: DataTypes.STRING, allowNull:false }
 },{
     timestamps: true,
-    tableName: 'usuarios'    
+    tableName: 'usuario'    
 });
 
 Usuario.belongsTo(Rol, {

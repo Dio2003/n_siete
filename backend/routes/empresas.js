@@ -1,8 +1,8 @@
 const {Router} = require("express");
-const { getContoller, postController, putController, deleteController, getIdController } = require("../controllers/empresas");
+const { getContoller, postController, putController, deleteController, getIdController, actualizarUsuarioEmpresa, getIdControllerUser } = require("../controllers/empresas");
 const { check } = require("express-validator");
 const { validar } = require("../middlewares/validarCampos");
-const { existePeriodo,  existeEmpresaId } = require("../helpers/validacionesBD");
+const { existePeriodo,  existeEmpresaId , existeUsuarioId} = require("../helpers/validacionesBD");
 const { validarJWT } = require("../middlewares/validarJWT");
 const { esAdminRol } = require("../middlewares/validarRol");
 
@@ -45,6 +45,15 @@ router.get('/:id', [
     // esAdminRol
 ],getIdController );
 
+router.get('/usuario/:id', [
+    check('id').custom(existeUsuarioId),
+    validar,
+    // validarJWT,
+    // esAdminRol
+],getIdControllerUser );
+
+// para asignar la empresa a un usuario
+router.patch('/actualizar/:id', actualizarUsuarioEmpresa);
 
 
 module.exports = router;

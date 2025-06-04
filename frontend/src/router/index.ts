@@ -49,6 +49,48 @@ const routes: Array<RouteRecordRaw> = [
     path: '/client',
     name: 'client',
     component: () => import(/* webpackChunkName: "about" */ '../views/GestClient.vue')
+  },
+  // Plan de Cuentas
+  {
+    path: '/account',
+    name: 'account',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PlanAccounts.vue')
+  },
+  // Perfil
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserProfil.vue')
+  },
+  // ASIENTO
+  {
+    path: '/asiento',
+    name: 'asiento',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AsientoContable.vue')
+  },
+  // COMPRA
+  {
+    path: '/compra',
+    name: 'compra',
+    component: () => import(/* webpackChunkName: "about" */ '../views/GestCompra.vue')
+  },
+  // Venta
+  {
+    path: '/venta',
+    name: 'venta',
+    component: () => import(/* webpackChunkName: "about" */ '../views/GestVenta.vue')
+  },
+  // Crear sala
+  {
+    path: '/crearsala',
+    name: 'crearsala',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SalaCrear.vue')
+  },
+  // Ingresar Sala
+  {
+    path: '/ingresarsala',
+    name: 'ingresarsala',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SalaIngresar.vue')
   }
 ]
 
@@ -57,7 +99,7 @@ const router = createRouter({
   routes
 })
 
-// 🛡️ Aquí agregamos el guardia de navegación
+// Aquí agregamos el guardia de navegación
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token') // o como guardes tu token
 

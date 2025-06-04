@@ -59,6 +59,8 @@ router.put('/cambioContra/:id', [
     // esAdminRol
 ], cambiarContra );
 
+
 router.get('/validaciones/verificarCorreo', verificarCorreo ); //para validacion asincrona
+
 
 module.exports = router;

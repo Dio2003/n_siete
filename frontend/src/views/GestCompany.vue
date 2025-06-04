@@ -10,7 +10,7 @@
       explicacion:
       --:empresa="selectedItem" : este codigo es un objeto, funciona para pasarle los datos seleccionados de la tabla al modal para las modificaciones
       -- :tituloModal="tituloModal" :subtituloModal="subtituloModal" : estos dos le pasan los titulos y subtitulos para cambiar segun se modifique o se cargue una nueva empresa
-      -- v-if="mostrarModal": este codigo se usa para mostrar el modal, en primera instacio se encuentra en false pero en la funcion mostrar modal se cambia a true y el v-if siempre esta escuchando para cambiar
+      -- v-if="mostrarModal": este codigo se usa para mostrar el modal, en primera instancia se encuentra en false pero en la funcion mostrar modal se cambia a true y el v-if siempre esta escuchando para cambiar
       -- @cerrar="cerrarModal" @actualizartabla="recargartabla()" : son eventos emitidos, son instruccione que el hijo modalCompany.vue le envia al padre GestCompany.vue para que cierren el modal o actualicen la tabla   -->
     <ModalEmpresa :empresa="selectedItem" :tituloModal="tituloModal" :subtituloModal="subtituloModal"
       v-if="mostrarModal" @cerrar="cerrarModal" @actualizartabla="recargartabla()" />
@@ -18,7 +18,7 @@
       <!-- TITULO -->
       <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1>Empresas</h1>
+        <h2>Empresas</h2>
       </div>
 
       <!-- SECCION DE BUSQUEDA Y FILTRO -->

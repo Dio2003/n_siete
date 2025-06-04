@@ -73,11 +73,11 @@ const login = async () => {
 
     // Si la respuesta es exitosa, guardamos el token en el localStorage
     if (response.data && response.data.token) {
-      localStorage.setItem('token', response.data.token) // O sessionStorage.setItem() si prefieres usar sessionStorage
-      console.log('Token guardado:', response.data.token)
+      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('usuario', JSON.stringify(response.data.usuario)) // Guardamos el usuario completo
 
       // Redirigir a la página principal o cualquier otra página
-      router.push('/menu') // Cambia esta ruta por la que necesites
+      router.push('/menu')
 
       // Mostrar mensaje de éxito
       Swal.fire({

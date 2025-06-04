@@ -127,26 +127,7 @@ const cerrarModal = () => {
 
 /* -------------------VALIDACIONES---------------------- */
 // Validar formulario
-/* const validarFormulario = (event: Event) => {
-  event.preventDefault()
 
-  const form = document.getElementById('formusuario') as HTMLFormElement | null
-  if (!form) return // Detiene la ejecución si form es null
-
-  if (!form.checkValidity()) {
-    event.stopPropagation()
-  }
-
-  form.classList.add('was-validated')
-}
-
-// Ejecutar validación al montar el componente
-onMounted(() => {
-  const form = document.getElementById('formusuario') as HTMLFormElement | null
-  if (!form) return // Asegurar que form no es null antes de agregar el event listener
-
-  form.addEventListener('submit', validarFormulario)
-}) */
 const enviado = ref(false)
 
 const errores = ref({
@@ -241,13 +222,6 @@ const verificarUsuarioDuplicado = async () => {
 
 // ---------------------CONFIGURACION PAR EJECUTAR GUARDAR O MODIFICAR------------------------------------|
 const guardarOmodificar = async () => {
-  /* if (usuario.value.id_usuario) {
-    // Si existe id_empresa, es una modificación
-    modificar()
-  } else {
-    // Si no existe, es un nuevo registro
-    guardar()
-  } */
   enviado.value = true
   errores.value.cedula = validarCedula()
   errores.value.id_rol = validarRol()

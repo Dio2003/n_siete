@@ -86,7 +86,7 @@
 
               <!-- NOMBRE DE LA EMPRESA -->
                <!-- Descripción:
-                1. v-model="empresa.empresa": esta parte es un prps del objeto empresa linea 197, lo que hace es mostrar el dato
+                1. v-model="empresa.empresa": esta parte es un props del objeto empresa linea 197, lo que hace es mostrar el dato
                 de la tabla, (en este caso el nombre de la empresa) cuando se modifica ademas se utiliza en el momento de guardar
                 o modificar tambien
                 2. :class="['form-control', { 'is-invalid': errores.empresa }]": esta parte:{ 'is-invalid': errores.empresa }]": el "errores" es una

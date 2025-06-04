@@ -8,9 +8,31 @@ const getIdController = async (req, res) => {
     try{
         let idEmpresa = req.params.id;
         let empresa= await Empresa.findOne({
-            attributes:['id_empresa', 'empresa', 'sigla','estado', 'id_periodo', 'createdAt', 'updatedAt'],
+            attributes:['id_empresa', 'nombre', 'sigla','estado', 'id_periodo','id_Usuario', 'createdAt', 'updatedAt'],
             where:{
                 id_empresa:idEmpresa
+            },
+            include:[
+                {
+                    model:Periodo,
+                    attributes:['nombre_periodo']
+                }
+            ]
+        });
+        console.log(empresa)
+        res.json(empresa);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Hable con el administrador' });
+    }
+}
+const getIdControllerUser = async (req, res) => {
+    try{
+        let idUser = req.params.id;
+        let empresa= await Empresa.findOne({
+            attributes:['id_empresa', 'nombre', 'sigla','estado', 'id_periodo','id_Usuario', 'createdAt', 'updatedAt'],
+            where:{
+                id_Usuario:idUser
             },
             include:[
                 {
@@ -49,7 +71,7 @@ const getContoller = async (req, res) => {
                 // Empresa.findAll()
                 Empresa.findAll({
                     where: { estado: true }, // traer solo las activas
-                    attributes:['id_empresa', 'empresa', 'sigla', 'estado', 'id_periodo', 'estado','createdAt', 'updatedAt'],
+                    attributes:['id_empresa', 'nombre', 'sigla','id_periodo','id_usuario',  'estado','createdAt', 'updatedAt'],
                     include:[//para obtener el nombre del periodo
                         {
                             model:Periodo,
@@ -116,10 +138,46 @@ const deleteController = async (req, res) => {
     }
 }
 
+// para asignar la empresa a un usuario
+const actualizarUsuarioEmpresa = async (req, res) => {
+  const { id } = req.params;
+  const { id_usuario } = req.body;
+
+  try {
+    const empresa = await Empresa.findByPk(id);
+
+    if (!empresa) {
+      return res.status(404).json({ msg: 'Empresa no encontrada' });
+    }
+
+    // Verificar si el usuario ya está asignado a otra empresa
+    const empresaExistente = await Empresa.findOne({
+      where: { id_usuario }
+    });
+
+    // Si ya está asignado y no es la misma empresa, impedirlo
+    if (empresaExistente && empresaExistente.id_empresa !== empresa.id_empresa) {
+      return res.status(400).json({ msg: 'Este usuario ya está asignado a otra empresa' });
+    }
+
+    // Solo actualizamos el campo id_usuario
+    await empresa.update({ id_usuario });
+
+    res.json({ msg: 'Usuario asignado correctamente a la empresa', empresa });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Error del servidor' });
+  }
+};
+
+
+
 module.exports = {
     getContoller,
     postController,
     putController,
     deleteController,
-    getIdController
+    getIdController,
+    actualizarUsuarioEmpresa,
+    getIdControllerUser
 }

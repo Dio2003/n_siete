@@ -7,7 +7,7 @@ const Periodo = db.define('Periodo', {
 },{
     createdAt: false,
     updatedAt: false,
-    tableName: 'periodos'    
+    tableName: 'periodo'    
 });
 
 module.exports = Periodo;

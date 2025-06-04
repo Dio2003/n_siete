@@ -10,10 +10,19 @@
 
     <!-- Enlaces visibles en pantallas medianas o grandes -->
     <div class="navbar-nav d-none d-md-flex flex-row align-items-center me-3">
-      <a class="nav-link px-3 d-flex align-items-center gap-1" href="#">
-        <Icon icon="mdi:account-circle-outline" width="20" />
-        Perfil
-      </a>
+
+      <!-- Rol -->
+      <p class="nav-link px-3 pt-4 d-flex align-items-center gap-1">
+        <Icon icon="mdi:account-tag-outline" width="20" height="20" />
+        <span>{{ rol }}</span>
+      </p>
+
+      <!-- Perfil -->
+      <router-link class="nav-link px-3 d-flex align-items-center gap-1" to="/profile">
+        <Icon icon="mdi:account-circle-outline" width="20" height="20" />
+        <span>Perfil</span>
+      </router-link>
+
       <a class="nav-link px-3 d-flex align-items-center gap-1" href="#">
         <Icon icon="mdi:bell-outline" width="20" />
         Notificaciones
@@ -39,10 +48,18 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
           <li>
-            <a class="dropdown-item d-flex align-items-center gap-2" href="#">
-              <Icon icon="mdi:account-circle-outline" width="20" />
-              Perfil
-            </a>
+            <!-- Rol -->
+            <p class="dropdown-item d-flex align-items-center gap-2">
+              <Icon icon="mdi:account-tag-outline" width="20" height="20" />
+              <span>{{ rol }}</span>
+            </p>
+          </li>
+          <li>
+            <!-- Perfil -->
+            <router-link class="dropdown-item d-flex align-items-center gap-2" to="/profile">
+              <Icon icon="mdi:account-circle-outline" width="20" height="20" />
+              <span>Perfil</span>
+            </router-link>
           </li>
           <li>
             <a class="dropdown-item d-flex align-items-center gap-2" href="#">
@@ -64,9 +81,12 @@
 </template>
 
 <script lang="ts" setup>
+// IMPORTACIONES
 import router from '@/router'
 import { Icon } from '@iconify/vue'
+import { ref, onMounted } from 'vue'
 
+// ------------Logica para cerrar sesión-------------- //
 const logout = () => {
   // Eliminar el token del localStorage o sessionStorage
   localStorage.removeItem('token') // O sessionStorage.removeItem() si usaste sessionStorage
@@ -74,6 +94,27 @@ const logout = () => {
   // Redirigir a la página de inicio de sesión o cualquier otra página
   router.push('/')
 }
+
+// ------------Logica para obtener el rol-------------- //
+const rol = ref('')
+
+onMounted(() => {
+  const storedUser = localStorage.getItem('usuario')
+  if (storedUser) {
+    const usuario = JSON.parse(storedUser)
+
+    // Obtener el nombre del rol
+    const roles: Record<number, string> = {
+      1: 'ADMINISTRADOR',
+      2: 'PROFESOR',
+      3: 'ALUMNO'
+    }
+    // Asignar el nombre del rol segun la id_rol
+    rol.value = typeof usuario.id_rol === 'object'
+      ? usuario.id_rol?.nombre ?? 'Desconocido'
+      : roles[Number(usuario.id_rol)] ?? 'Desconocido'
+  }
+})
 </script>
 
 <style scoped>

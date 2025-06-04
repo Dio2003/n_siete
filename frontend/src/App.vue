@@ -1,11 +1,13 @@
 <template>
-  <!-- <router-view /> -->
+  <div id="scale-wrapper">
+    <!-- <router-view /> -->
   <div class="content">
     <router-view />
   </div>
   <footer class="footer">
     © Sistema SIETE, hecho por los estudiantes de IIE 2025
   </footer>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -18,7 +20,12 @@ html, body, #app {
   margin: 0;
   padding: 0;
 }
-
+#scale-wrapper {
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: 133.33%;
+  min-height: calc(100vh / 0.75); /* compensar el escalado */
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
