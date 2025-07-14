@@ -1,29 +1,12 @@
-const { validationResult } = require('express-validator');
-const jasper = require('node-jasper')({
-    path: 'C:\\jasperreports-7.0.3\\lib',
-    reports: {
-        hw: {
-            jasper: './reports/BalanceSumasSaldos.jasper',
-            jrxml: './reports/BalanceSumasSaldos.jrxml'
-        }
-    }
-});
+const { exec } = require('child_process');
+const path = require('path');
+const fs = require('fs');
 
 const generarBalanceSumasSaldos = async (req, res) => {
     try {
-        // Validar errores de express-validator
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Error en los parámetros',
-                errors: errors.array()
-            });
-        }
-
         const { desde, hasta, idempresa } = req.query;
 
-        // Validaciones adicionales
+        // Validar parámetros obligatorios
         if (!desde || !hasta || !idempresa) {
             return res.status(400).json({
                 ok: false,
@@ -31,21 +14,12 @@ const generarBalanceSumasSaldos = async (req, res) => {
             });
         }
 
-        // Validar formato de fechas
-        const fechaDesde = new Date(desde);
-        const fechaHasta = new Date(hasta);
-        
-        if (isNaN(fechaDesde.getTime()) || isNaN(fechaHasta.getTime())) {
+        // Validar formato de fechas (YYYY-MM-DD)
+        const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!fechaRegex.test(desde) || !fechaRegex.test(hasta)) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Las fechas deben tener formato válido (YYYY-MM-DD)'
-            });
-        }
-
-        if (fechaDesde > fechaHasta) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'La fecha desde no puede ser mayor que la fecha hasta'
+                msg: 'Las fechas deben estar en formato YYYY-MM-DD'
             });
         }
 
@@ -60,60 +34,102 @@ const generarBalanceSumasSaldos = async (req, res) => {
 
         console.log('Generando reporte con parámetros:', { desde, hasta, idempresa: empresaId });
 
-        // Configurar la conexión a la base de datos
-        const dbConfig = {
-            driver: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            database: 'n_siete_bd',
-            username: 'root',
-            password: '1234',
-            jdbc_driver_path: 'C:\\jdbc\\mysql-connector-j-9.3.0.jar'
-        };
+        // Rutas de archivos
+        const jasperFile = path.join(__dirname, '../reports/BalanceSumasSaldos.jasper');
+        const outputDir = path.join(__dirname, '../temp');
+        const outputFile = `balance_${Date.now()}.pdf`;
+        const outputPath = path.join(outputDir, outputFile);
 
-        // Parámetros para el reporte
-        const reportParams = {
-            DESDE: desde,
-            HASTA: hasta,
-            IDEMPRESA: empresaId
-        };
+        // Crear directorio temporal si no existe
+        if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true });
+        }
 
-        // Generar el reporte
-        const report = jasper.pdf({
-            report: 'hw',
-            data: dbConfig,
-            parameters: reportParams
-        });
+        // Verificar que el archivo .jasper existe
+        if (!fs.existsSync(jasperFile)) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Archivo de reporte no encontrado: BalanceSumasSaldos.jasper'
+            });
+        }
 
-        report.exec((err, pages) => {
-            if (err) {
-                console.error('Error al generar el reporte:', err);
+        // Construir comando JasperStarter
+        const jasperStarterPath = 'C:\\jasperstarter\\bin\\jasperstarter.exe'; // Ajusta esta ruta según tu instalación
+        const jdbcPath = 'C:\\jdbc\\mysql-connector-j-9.3.0.jar';
+        
+        const command = `"${jasperStarterPath}" process "${jasperFile}" ` +
+            `-f pdf ` +
+            `-o "${outputDir}" ` +
+            `-n "${outputFile.replace('.pdf', '')}" ` +
+            `-t mysql ` +
+            `-H localhost ` +
+            `-u root ` +
+            `-p 1234 ` +
+            `-n n_siete_bd ` +
+            `--jdbc-dir "C:\\jdbc" ` +
+            `-P DESDE="${desde}" ` +
+            `-P HASTA="${hasta}" ` +
+            `-P IDEMPRESA=${empresaId}`;
+
+        console.log('Ejecutando comando:', command);
+
+        // Ejecutar JasperStarter
+        exec(command, { timeout: 30000 }, (error, stdout, stderr) => {
+            if (error) {
+                console.error('Error ejecutando JasperStarter:', error);
+                console.error('stderr:', stderr);
                 return res.status(500).json({
                     ok: false,
-                    msg: 'Error interno al generar el reporte',
-                    error: err.message
+                    msg: 'Error al generar el reporte',
+                    error: error.message,
+                    details: stderr
+                });
+            }
+
+            console.log('JasperStarter stdout:', stdout);
+
+            // Verificar que el archivo PDF se generó
+            if (!fs.existsSync(outputPath)) {
+                return res.status(500).json({
+                    ok: false,
+                    msg: 'El archivo PDF no se generó correctamente'
                 });
             }
 
             try {
-                // Configurar headers para descarga de PDF
+                // Leer el archivo PDF
+                const pdfBuffer = fs.readFileSync(outputPath);
+
+                // Configurar headers para descarga
                 res.set({
                     'Content-Type': 'application/pdf',
                     'Content-Disposition': `attachment; filename="balance_sumas_saldos_${desde}_${hasta}.pdf"`,
-                    'Content-Length': pages.length
+                    'Content-Length': pdfBuffer.length
                 });
 
                 // Enviar el PDF
-                res.send(pages);
-                
-                console.log('Reporte generado exitosamente');
-                
-            } catch (sendError) {
-                console.error('Error al enviar el reporte:', sendError);
+                res.send(pdfBuffer);
+
+                // Limpiar archivo temporal después de un breve delay
+                setTimeout(() => {
+                    try {
+                        if (fs.existsSync(outputPath)) {
+                            fs.unlinkSync(outputPath);
+                            console.log('Archivo temporal eliminado:', outputPath);
+                        }
+                    } catch (cleanupError) {
+                        console.error('Error al limpiar archivo temporal:', cleanupError);
+                    }
+                }, 1000);
+
+                console.log('Reporte generado y enviado exitosamente');
+
+            } catch (readError) {
+                console.error('Error al leer el archivo PDF:', readError);
                 return res.status(500).json({
                     ok: false,
-                    msg: 'Error al enviar el reporte generado',
-                    error: sendError.message
+                    msg: 'Error al leer el archivo PDF generado',
+                    error: readError.message
                 });
             }
         });
@@ -128,41 +144,6 @@ const generarBalanceSumasSaldos = async (req, res) => {
     }
 };
 
-const testConexion = async (req, res) => {
-    try {
-        // Test básico de la configuración de jasper
-        const testConfig = {
-            driver: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            database: 'n_siete_bd',
-            username: 'root',
-            password: '1234',
-            jdbc_driver_path: 'C:\\jdbc\\mysql-connector-j-9.3.0.jar'
-        };
-
-        res.json({
-            ok: true,
-            msg: 'Configuración de jasper inicializada correctamente',
-            config: {
-                jasperPath: 'C:\\jasperreports-7.0.3\\lib',
-                jdbcPath: 'C:\\jdbc\\mysql-connector-j-9.3.0.jar',
-                reportPath: './reports/BalanceSumasSaldos.jasper',
-                database: testConfig
-            }
-        });
-
-    } catch (error) {
-        console.error('Error en test de conexión:', error);
-        res.status(500).json({
-            ok: false,
-            msg: 'Error al probar la configuración',
-            error: error.message
-        });
-    }
-};
-
 module.exports = {
-    generarBalanceSumasSaldos,
-    testConexion
+    generarBalanceSumasSaldos
 };

@@ -1,35 +1,27 @@
-# Directorio de Reportes
+# Directorio de Reportes JasperStarter
 
-Este directorio contiene los archivos .jasper necesarios para la generación de reportes.
+Este directorio debe contener los archivos .jasper compilados.
 
-## Archivos requeridos:
+## Archivo requerido:
+- `BalanceSumasSaldos.jasper` - Reporte de Balance de Sumas y Saldos
 
-### BalanceSumasSaldos.jasper
-- **Descripción**: Reporte de Balance de Sumas y Saldos
-- **Parámetros requeridos**:
-  - `DESDE` (Date): Fecha de inicio del período
-  - `HASTA` (Date): Fecha de fin del período  
-  - `IDEMPRESA` (Integer): ID de la empresa
+## Parámetros del reporte:
+- `DESDE` (String) - Fecha de inicio en formato YYYY-MM-DD
+- `HASTA` (String) - Fecha de fin en formato YYYY-MM-DD  
+- `IDEMPRESA` (Integer) - ID de la empresa
 
-## Configuración:
+## Configuración JasperStarter:
+- JasperStarter: C:\jasperstarter\bin\jasperstarter.exe
+- MySQL JDBC: C:\jdbc\mysql-connector-j-9.3.0.jar
+- Base de datos: n_siete_bd (localhost:3306)
+- Usuario: root / Contraseña: 1234
 
-### JasperReports
-- **Ruta de instalación**: `C:\jasperreports-7.0.3`
-- **Librería utilizada**: node-jasper
-
-### Base de datos
-- **Motor**: MySQL
-- **Host**: localhost:3306
-- **Base de datos**: n_siete_bd
-- **Conector JDBC**: `C:\jdbc\mysql-connector-j-9.3.0.jar`
-
-## Uso:
-
-1. Colocar el archivo `BalanceSumasSaldos.jasper` en este directorio
-2. El endpoint estará disponible en: `GET /api/reportes/balance-sumas-saldos`
-3. Parámetros de consulta requeridos: `desde`, `hasta`, `idempresa`
-
-## Ejemplo de uso:
+## Uso del endpoint:
 ```
 GET /api/reportes/balance-sumas-saldos?desde=2025-01-01&hasta=2025-12-31&idempresa=1
 ```
+
+## Instalación JasperStarter:
+1. Descargar desde: https://sourceforge.net/projects/jasperstarter/
+2. Extraer en C:\jasperstarter\
+3. Asegurar que jasperstarter.exe esté en C:\jasperstarter\bin\
